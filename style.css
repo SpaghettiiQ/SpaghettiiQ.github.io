@@ -53,7 +53,7 @@ body {
 	background: rgba(186, 186, 186, 0.3);
 	backdrop-filter: blur(0.8rem);
 	-webkit-backdrop-filter: blur(0.8rem);
-	border: 0.2rem rgba(255, 255, 255, 0.24) solid;
+	border: 0.14rem rgba(255, 255, 255, 0.24) solid;
 }
 
 .panel .hstack {
