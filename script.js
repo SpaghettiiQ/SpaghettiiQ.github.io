@@ -1,3 +1,10 @@
+const btns = document.getElementById('btns');
+const timeInput = document.getElementById('timeInput');
+
+timeInput.addEventListener('change', function(e) {
+	btns.classList.remove('requiredAlert');
+})
+
 const textInput = document.getElementById('textInput');
 const textLimit = 200;
 
@@ -11,18 +18,31 @@ textInput.addEventListener('keydown', (e) => {
 		e.preventDefault();
 	}
 	if ((textInput.textContent.length + 1 > 0) && (String.fromCharCode(e.keyCode).match(/(\w|\s)/g))) {
-		textInput.classList.remove('requiredAlert')
+		document.getElementsByClassName('textRow')[0].classList.remove('requiredAlert');
 	}
 });
 
-textInput.addEventListener("paste", function(e) {
-	console.log(document.getSelection().toString().length)
+textInput.addEventListener('paste', function(e) {
 	e.preventDefault();
 	var text = e.clipboardData.getData("text/plain");
 	if (textInput.textContent.length + text.length > textLimit) {
 		text = text.substring(0, textLimit - textInput.textContent.length + document.getSelection().toString().length);
 	}
 	document.execCommand("insertHTML", false, text);
+});
+
+textInput.addEventListener('focusin', function(e) {
+	textInput.classList.add('focused');
+	if (textInput.innerHTML == `<span class="placeholder-text">Text</span>`) {
+		textInput.innerHTML = "";
+	}
+});
+
+textInput.addEventListener('focusout', function(e) {
+	textInput.classList.remove('focused');
+	if (textInput.innerText == "") {
+		textInput.innerHTML = `<span class="placeholder-text">Text</span>`;
+	}
 });
 
 const addBtn = document.getElementById('addBtn');
@@ -356,6 +376,7 @@ class Calendar {
 
 			this._tableBody.appendChild(row);
 		} while (date.getMonth() == this._month);
+		btns.classList.remove('requiredAlert');
 	}
 
 	_isMinMonth() {
@@ -466,4 +487,4 @@ function hideCal() {
 	toggleCal();
 }
 
-window.onload = toggleCal
+window.onload = toggleCal;
